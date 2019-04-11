@@ -1,45 +1,55 @@
-describe('Add a pet', () => {
+import faker from 'faker';
+faker.locale = 'en_AU';
+
+describe('test pets APIs', () => {
+  // Setting up data for tests
+  const id = new Date().getTime();
+  const name = faker.name.firstName();
+  const updatedName = faker.name.firstName(); 
+
   it('should add the pet correctly', () => {
     const url = 'https://petstore.swagger.io/v2/pet'
     const body = {
-      "id": 1,
+      "id": id,
       "category": {
-        "id": 1,
-        "name": "testDoggie"
+        "id": id,
+        "name": "string"
       },
-      "name": "doggie",
+      "name": name,
       "photoUrls": [
         "string"
       ],
       "tags": [
         {
-          "id": 9999,
+          "id": id,
           "name": "string"
         }
       ],
       "status": "available"
     }
+    cy.log(id);
     cy.request('POST', url, body)
     .then((response) => {
       expect(response.status).to.eq(200);
-      console.log(response);
+      expect(response.body.id).to.eq(id);
+      expect(response.body.name).to.eq(name);
     })
   });
   it('should update the pet correctly', () => {
     const url = 'https://petstore.swagger.io/v2/pet'
     const body = {
-      "id": 0,
+      "id": id,
       "category": {
-        "id": 0,
-        "name": "testDoggie"
+        "id": id,
+        "name": "string"
       },
-      "name": "doggie",
+      "name": updatedName,
       "photoUrls": [
         "string"
       ],
       "tags": [
         {
-          "id": 9999,
+          "id": id,
           "name": "string"
         }
       ],
@@ -48,7 +58,6 @@ describe('Add a pet', () => {
     cy.request('PUT', url, body)
     .then((response) => {
       expect(response.status).to.eq(200);
-      console.log(response);
     })
   });
   it('should find the pet by status correctly', () => {
@@ -59,54 +68,30 @@ describe('Add a pet', () => {
     cy.request('GET', url, body)
     .then((response) => {
       expect(response.status).to.eq(200);
-      console.log(response);
     })
   });
   it('should find the pet by id correctly', () => {
-    const id = 1;
     var url = 'https://petstore.swagger.io/v2/pet/'
     var url = url.concat(id);
     cy.request('GET', url)
     .then((response) => {
       expect(response.status).to.eq(200);
-      console.log(response);
     })
   });
   it('should update the pet by id correctly', () => {
-    const id = 1
     var path = 'https://petstore.swagger.io/v2/pet/';
     var path = path.concat(id);
-    const form = true;
-    // const options = {
-    //   body : {
-    //     "name": "doggie",
-    //     "status": "available"
-    //   }
-    // }
-    // const body = {
-    //   "name": "doggie",
-    //   "status": "available"
-    // }
-    cy.log(path);
-    // cy.request('POST', url, {name: "Doggie", status: "available"}, form)
-    // .then((response) => {
-    //   expect(response.status).to.eq(200);
-    //   console.log(response);
-    // })
     cy.request({
       method: 'POST',
       url: path,
       form: true,
       body: {name: "Doggie", status: "available"}
-
     })
     .then((response) => {
       expect(response.status).to.eq(200);
-      console.log(response);
     })
   });
   it('should delete the pet by id correctly', () => {
-    const id = 1
     var path = 'https://petstore.swagger.io/v2/pet/';
     var path = path.concat(id);
     cy.request({
@@ -115,7 +100,6 @@ describe('Add a pet', () => {
     })
     .then((response) => {
       expect(response.status).to.eq(200);
-      console.log(response);
     })
   });
 });
