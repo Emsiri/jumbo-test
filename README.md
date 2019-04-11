@@ -14,3 +14,5 @@ Or to open Cypress's debugger (recommended):
 ```
 npx cypress open
 ```
+From here you'll need to click on the pet.feature to run the tests.
+feature files are located in cypress/integration/ and the spec file is located in cypress/integration/pet/
