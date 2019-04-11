@@ -1,5 +1,3 @@
-import faker from 'faker';
-faker.locale = 'en_AU';
 import { Given, Then, When } from "cypress-cucumber-preprocessor/steps";
 
 describe('test pets APIs', () => {
